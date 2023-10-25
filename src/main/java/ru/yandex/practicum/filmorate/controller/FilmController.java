@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/films")
 public class FilmController extends BaseController<Film> {
-    private final static LocalDate START_RELEASE_DATE = LocalDate.of(1895, 12, 28);
+    private static final LocalDate START_RELEASE_DATE = LocalDate.of(1895, 12, 28);
 
     @Override
     public void validate(Film film) {
