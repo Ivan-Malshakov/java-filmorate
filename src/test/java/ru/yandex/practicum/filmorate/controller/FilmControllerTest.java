@@ -11,6 +11,10 @@ import java.time.LocalDate;
 public class FilmControllerTest {
     private FilmController controller;
 
+    private static final String NAME = "Name";
+    private static final String DESCRIPTION = "Description";
+    private static final int DURATION = 100;
+
     @BeforeEach
     void setUp() {
         controller = new FilmController();
@@ -19,10 +23,10 @@ public class FilmControllerTest {
     @Test
     void validateShouldThrowValidationExceptionWithInvalidReleaseDate() {
         Film film = Film.builder()
-                .name("Name")
-                .description("Description")
+                .name(NAME)
+                .description(DESCRIPTION)
                 .releaseDate(LocalDate.of(1800, 1, 1))
-                .duration(100)
+                .duration(DURATION)
                 .build();
         Assertions.assertThrows(ValidationException.class, () -> controller.validate(film));
     }
@@ -30,10 +34,10 @@ public class FilmControllerTest {
     @Test
     void validateWithValidReleaseDate() {
         Film film = Film.builder()
-                .name("Name")
-                .description("Description")
+                .name(NAME)
+                .description(DESCRIPTION)
                 .releaseDate(LocalDate.of(1900, 1, 1))
-                .duration(100)
+                .duration(DURATION)
                 .build();
         controller.validate(film);
     }

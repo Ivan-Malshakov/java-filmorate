@@ -14,13 +14,9 @@ public class UserController extends BaseController<User> {
 
     @Override
     public void validate(User user) {
-        if (user.getName() == null) {
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
             log.info("No user name: was set login '{}'.", user.getLogin());
-        }
-        if (user.getName().isBlank()) {
-            user.setName(user.getLogin());
-            log.info("User name is blank: was set login '{}'.", user.getLogin());
         }
     }
 
