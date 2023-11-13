@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.controller;
+package ru.yandex.practicum.filmorate.storage.memory;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,8 +7,9 @@ import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
 
-public class UserControllerTest {
-    private UserController controller;
+public class InMemoryUserStorageTest {
+    InMemoryUserStorage storage;
+
 
     private static final String EMAIL = "user@yandex.ru";
     private static final String LOGIN = "UserLogin";
@@ -16,7 +17,7 @@ public class UserControllerTest {
 
     @BeforeEach
     void setUp() {
-        controller = new UserController();
+        storage = new InMemoryUserStorage();
     }
 
     @Test
@@ -28,7 +29,7 @@ public class UserControllerTest {
                 .birthday(BIRTHDAY)
                 .build();
 
-        controller.validate(user);
+        storage.validate(user);
 
         final String actualUserName = "UserLogin";
         final String userName = user.getName();
@@ -44,7 +45,7 @@ public class UserControllerTest {
                 .birthday(BIRTHDAY)
                 .build();
 
-        controller.validate(user);
+        storage.validate(user);
 
         final String actualUserName = "UserLogin";
         final String userName = user.getName();
@@ -61,7 +62,7 @@ public class UserControllerTest {
                 .birthday(BIRTHDAY)
                 .build();
 
-        controller.validate(user);
+        storage.validate(user);
 
         final String actualUserName = "UserName";
         final String userName = user.getName();
