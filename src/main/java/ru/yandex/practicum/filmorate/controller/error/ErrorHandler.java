@@ -12,20 +12,20 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleDataNotFoundException(final DataNotFoundException e) {
-        return new ErrorResponse("Data error", e.getMessage());
+    public int handleDataNotFoundException(final DataNotFoundException e) {
+        return new ErrorResponse("Data error", e.getMessage(), 404).getStatus();
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleValidationException(final ValidationException e) {
-        return new ErrorResponse("Validation error", e.getMessage());
+    public int handleValidationException(final ValidationException e) {
+        return new ErrorResponse("Validation error", e.getMessage(), 400).getStatus();
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleRuntimeException(final Exception e) {
-        return new ErrorResponse("Error", e.getMessage());
+    public int handleRuntimeException(final Exception e) {
+        return new ErrorResponse("Error", e.getMessage(), 500).getStatus();
     }
 
 }

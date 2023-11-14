@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.storage.UserStorage;
 import ru.yandex.practicum.filmorate.storage.memory.InMemoryUserStorage;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class UserService {
-    InMemoryUserStorage storage;
+    UserStorage storage;
 
     @Autowired
     public UserService(InMemoryUserStorage storage) {
@@ -35,7 +36,8 @@ public class UserService {
 
     public List<User> getFriends(Long id) {
         List<User> friends = new ArrayList<>();
-        for (Long idFriend : storage.getData(id).getFriends()) {
+        User user = storage.getData(id);
+        for (Long idFriend : user.getFriends()) {
             if (storage.getData(idFriend) != null) {
                 friends.add(storage.getData(idFriend));
             }

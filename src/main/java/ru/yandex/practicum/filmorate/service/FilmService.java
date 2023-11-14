@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.DataNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.storage.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.memory.InMemoryFilmStorage;
 
 import java.util.Comparator;
@@ -14,8 +15,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class FilmService {
-
-    InMemoryFilmStorage storage;
+    FilmStorage storage;
 
     @Autowired
     public FilmService(InMemoryFilmStorage storage) {
@@ -24,15 +24,14 @@ public class FilmService {
 
     public void addLike(Long filmId, Long userId) {
         storage.getData(filmId).putLike(userId);
-        log.info("Like was successfully added.");
     }
 
     public void deleteLike(Long filmId, Long userId) {
-        if (!storage.getData(filmId).getLikes().contains(userId)) {
+        Film film = storage.getData(filmId);
+        if (!film.getLikes().contains(userId)) {
             throw new DataNotFoundException(String.format("User id = '%s' not found.", userId));
         }
-        storage.getData(filmId).removeLike(userId);
-        log.info("Like was successfully added.");
+        film.removeLike(userId);
     }
 
     public List<Film> getPopular(Integer count) {
