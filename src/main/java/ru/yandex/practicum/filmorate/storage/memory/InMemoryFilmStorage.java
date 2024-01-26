@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Component
 @Slf4j
 public class InMemoryFilmStorage extends InMemoryBaseStorage<Film> implements FilmStorage {
-    private static final LocalDate START_RELEASE_DATE = LocalDate.of(1895, 12, 28);
+    public static final LocalDate START_RELEASE_DATE = LocalDate.of(1895, 12, 28);
 
     public InMemoryFilmStorage() {
     }
