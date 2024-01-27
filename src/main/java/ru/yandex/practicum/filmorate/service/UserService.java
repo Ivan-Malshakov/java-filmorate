@@ -21,28 +21,26 @@ public class UserService {
     }
 
     public void addFriend(Long firstId, Long secondId) {
-        storage.getData(firstId);
-        storage.getData(secondId);
-
-        friendStorage.addFriend(firstId, secondId);
+        if (storage.isExists(firstId) && storage.isExists(secondId)) {
+            friendStorage.addFriend(firstId, secondId);
+        }
     }
 
     public void deleteFriend(Long firstId, Long secondId) {
-        storage.getData(firstId);
-        storage.getData(secondId);
-
-        friendStorage.deleteFriend(firstId, secondId);
+        if (storage.isExists(firstId) && storage.isExists(secondId)) {
+            friendStorage.deleteFriend(firstId, secondId);
+        }
     }
 
     public List<User> getFriends(Long id) {
-        storage.getData(id);
+        storage.isExists(id);
 
         return friendStorage.getFriends(id);
     }
 
     public List<User> getCommonFriends(Long firstId, Long secondId) {
-        storage.getData(firstId);
-        storage.getData(secondId);
+        storage.isExists(firstId);
+        storage.isExists(secondId);
 
         return friendStorage.getCommonFriends(firstId, secondId);
     }

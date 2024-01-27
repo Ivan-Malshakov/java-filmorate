@@ -71,7 +71,7 @@ public class FilmDbStorage implements FilmStorage {
                 "from films as f " +
                 "join mpa on f.mpa_id = mpa.id";
 
-        return jdbcTemplate.query(sql, this::createFilm);
+        return jdbcTemplate.query(sql, FilmDbStorage::createFilm);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class FilmDbStorage implements FilmStorage {
                 "join mpa on f.mpa_id = mpa.id " +
                 "where f.id = ?";
 
-        List<Film> films = jdbcTemplate.query(sql, this::createFilm, id);
+        List<Film> films = jdbcTemplate.query(sql, FilmDbStorage::createFilm, id);
 
         if (films.size() != 1) {
             throw new DataNotFoundException(String.format("Film with id = %s is not single", id));
@@ -90,7 +90,7 @@ public class FilmDbStorage implements FilmStorage {
         return films.get(0);
     }
 
-    private Film createFilm(ResultSet rs, int rowNum) throws SQLException {
+    static Film createFilm(ResultSet rs, int rowNum) throws SQLException {
 
         Film film = Film.builder()
                 .id(rs.getLong("id"))

@@ -89,4 +89,19 @@ public class UserDbStorage implements UserStorage {
             log.info("No user name: was set login '{}'.", user.getLogin());
         }
     }
+
+    @Override
+    public boolean isExists(Long id) {
+        boolean isExist = false;
+
+        String sql = "select id from users where id = ?";
+        List<Long> getIdList = jdbcTemplate.query(sql, (rs, rowNum) -> rs.getLong("id"), id);
+
+        if (!getIdList.isEmpty() && getIdList.get(0).equals(id)) {
+            isExist = true;
+        } else {
+            throw new DataNotFoundException(String.format("User with id = %s not found", id));
+        }
+        return isExist;
+    }
 }

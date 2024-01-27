@@ -19,4 +19,9 @@ public class InMemoryUserStorage extends InMemoryBaseStorage<User> implements Us
         }
     }
 
+    @Override
+    public boolean isExists(Long id) {
+        throw new UnsupportedOperationException();
+    }
+
 }

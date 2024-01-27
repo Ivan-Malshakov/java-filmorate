@@ -11,8 +11,6 @@ import ru.yandex.practicum.filmorate.storage.LikeStorage;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
 
 @Service
 public class FilmService {
@@ -33,35 +31,19 @@ public class FilmService {
     }
 
     public void addLike(Long filmId, Long userId) {
-        userStorage.getData(userId);
+        userStorage.isExists(userId);
         likeStorage.addLike(filmId, userId);
 
     }
 
     public void deleteLike(Long filmId, Long userId) {
-        userStorage.getData(userId);
+        userStorage.isExists(userId);
         likeStorage.deleteLike(filmId, userId);
     }
 
     public List<Film> getPopular(Integer count) {
-        return storage.getAll().stream()
-                .sorted(filmComparator.reversed())
-                .limit(count)
-                .collect(Collectors.toList());
+        return likeStorage.getPopular(count);
     }
-
-    private final Comparator<Film> filmComparator = new Comparator<Film>() {
-        @Override
-        public int compare(Film o1, Film o2) {
-            if (o1.getRate() == o2.getRate()) {
-                return o1.getId().compareTo(o2.getId());
-            } else if (o1.getRate() > o2.getRate()) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
-    };
 
     public Film create(Film data) {
         Film film = storage.create(data);
@@ -80,7 +62,6 @@ public class FilmService {
 
         filmGenresStorage.updateGenresForFilm(film, genres);
         if (genresSetSize != 0) {
-            filmGenresStorage.updateGenresForFilm(film, data.getGenres());
             film.setGenres(filmGenresStorage.getGenresForFilm(film.getId()));
         } else if (genresSetSize == 0) {
             film.setGenres(new LinkedHashSet<>());
@@ -104,5 +85,4 @@ public class FilmService {
         film.setGenres(filmGenresStorage.getGenresForFilm(id));
         return film;
     }
-
 }

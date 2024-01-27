@@ -45,5 +45,4 @@ public abstract class InMemoryBaseStorage<T extends BaseUnit> implements Abstrac
     }
 
     public abstract void validate(T data);
-
 }

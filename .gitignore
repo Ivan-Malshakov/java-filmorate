@@ -36,5 +36,4 @@ build/
 mvnw
 mvnw.cmd
 
-.db/
-*.db
+db/
