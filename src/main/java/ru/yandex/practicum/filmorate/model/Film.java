@@ -8,8 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,13 +28,9 @@ public class Film extends BaseUnit {
     @Min(1)
     private int duration;
 
-    private Set<Long> likes = new HashSet<>();
+    private int rate;
 
-    public void putLike(Long id) {
-        likes.add(id);
-    }
+    private Mpa mpa = new Mpa();
 
-    public void removeLike(Long id) {
-        likes.remove(id);
-    }
+    private Set<Genre> genres = new LinkedHashSet<>();
 }
