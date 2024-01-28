@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.controller;
+package ru.yandex.practicum.filmorate.storage.memory;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,8 +8,8 @@ import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
 
-public class FilmControllerTest {
-    private FilmController controller;
+public class InMemoryFilmStorageTest {
+    InMemoryFilmStorage storage;
 
     private static final String NAME = "Name";
     private static final String DESCRIPTION = "Description";
@@ -17,7 +17,7 @@ public class FilmControllerTest {
 
     @BeforeEach
     void setUp() {
-        controller = new FilmController();
+        storage = new InMemoryFilmStorage();
     }
 
     @Test
@@ -28,7 +28,7 @@ public class FilmControllerTest {
                 .releaseDate(LocalDate.of(1800, 1, 1))
                 .duration(DURATION)
                 .build();
-        Assertions.assertThrows(ValidationException.class, () -> controller.validate(film));
+        Assertions.assertThrows(ValidationException.class, () -> storage.validate(film));
     }
 
     @Test
@@ -39,6 +39,6 @@ public class FilmControllerTest {
                 .releaseDate(LocalDate.of(1900, 1, 1))
                 .duration(DURATION)
                 .build();
-        controller.validate(film);
+        storage.validate(film);
     }
 }
